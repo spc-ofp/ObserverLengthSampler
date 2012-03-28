@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<grammar version="1.0" xml:lang="en-US" root="rootRule" xmlns="http://www.w3.org/2001/06/grammar" mode="voice" tag-format="semantics-ms/1.0">
+
+  <!--
+    /*
+     * This file is part of Observer Length Sampler.
+     *
+     * Observer Length Sampler is free software: you can redistribute it and/or modify
+     * it under the terms of the GNU Affero General Public License as published by
+     * the Free Software Foundation, either version 3 of the License, or
+     * (at your option) any later version.
+     *  
+     * Observer Length Sampler is distributed in the hope that it will be useful,
+     * but WITHOUT ANY WARRANTY; without even the implied warranty of
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * GNU Affero General Public License for more details.
+     *  
+     * You should have received a copy of the GNU Affero General Public License
+     * along with Observer Length Sampler.  If not, see <http://www.gnu.org/licenses/>.
+     */ 
+  -->
+  
+  <!-- simple rule for testing species identification
+  <rule id="rootRule" scope="public">
+    <one-of>
+      <item>
+        <ruleref uri="#fishSpecies" />
+        <tag> $ = $$ </tag>
+      </item>
+    </one-of>
+  </rule>
+  -->
+  
+  
+  <!-- rootRule holds the reference to all the rules that need to start active -->
+  <rule id="rootRule" scope="public">
+    <example> yellowfin one nine </example>
+    <example> yellowfin one two zero </example>
+    <example> barracuda five four </example>
+    <example> batfish seven </example>
+
+    <ruleref uri="#fishSpecies" />
+    <tag> $.Species = $$; </tag>
+
+    <ruleref uri="#Digits" />
+    <tag> $.FishLength = $$; </tag>
+  </rule>
+
+  <!-- 
+  This list of species (and alternates) comes from
+  the list of common species printed at the bottom of the 
+  SPC/FFA Regional Purse Seine Observer Set Details form
+  (PS-3).
+  
+  One optional enhancement would be to set the species code
+  here, but what is present in the application seems to work for now.
+  -->
+  <rule id="fishSpecies" scope="public">
+    <example> yellowfin </example>
+    <example> bigeye trevally </example>
+    <one-of>
+      <item>Skipjack</item>
+      <item>
+        <tag> $._value = "Yellowfin"; </tag>
+        <one-of>
+          <item> Yellowfin </item>
+          <item> Yellowfin Tuna </item>
+        </one-of>
+      </item>
+      <item>
+        <tag> $._value = "Bigeye"; </tag>
+        <one-of>
+          <item>Bigeye</item>
+          <item>Bigeye Tuna</item>
+        </one-of>
+      </item>
+      <item>Frigate Tuna</item>
+      <item>Bullet Tuna</item>
+      <item>Kawakawa</item>
+      <item>
+        <tag> $._value = "Albacore"; </tag>
+        <one-of>        
+          <item> Albacore </item>
+          <item> Albacore Tuna </item>
+        </one-of>
+      </item>
+      <item>Wahoo</item>
+      <item>Blue Marlin</item>
+      <item>Black Marlin</item>
+      <item>Striped Marlin</item>
+      <item>Sailfish</item>
+      <item>Short billed spearfish</item>
+      <item>Broadbill swordfish</item>
+      <item>Sergeant major</item>
+      <item>Amberjack</item>
+      <item>
+        <tag> $._value = "Barracuda"; </tag>
+        <one-of>
+          <item>Barracuda</item>
+          <item>Barracudas</item>
+        </one-of>
+      </item>
+      <item>
+        <tag> $._value = "Batfish"; </tag>
+        <one-of>
+          <item>Batfish</item>
+          <item>Batfishes</item>
+        </one-of>
+      </item>
+      <item>Bigeye Trevally</item>
+      <item>Mahi mahi</item>
+      <item>
+        <tag> $._value = "Rainbow Runner"; </tag>
+        <one-of>
+          <item>Rainbow Runner</item>
+          <item>Rainbow Runners</item>
+        </one-of>
+      </item>
+      <item>File fish</item>
+      <item>
+        <tag> $._value = "Triggerfish"; </tag>
+        <one-of>
+          <item>Triggerfish</item>
+          <item>Triggerfishes</item>
+          <item>Trigger fish</item>
+          <item>Trigger fishes</item>
+        </one-of>
+      </item>
+      <item>Drummer</item>
+      <item>Mackeral scad</item>
+      <item>
+        <tag> $._value = "Man O War"; </tag>
+        <one-of>
+          <item>Man O War</item>
+          <item>Man O War fish</item>
+        </one-of>
+      </item>
+      <item>Triple Tail</item>
+      <item>
+        <tag> $._value = "Pomfret"; </tag>
+        <one-of>
+          <item>Pomfret</item>
+          <item>Pomfrets</item>
+          <item>Ocean Bream</item>
+          <item>Ocean Breams</item>
+        </one-of>
+      </item>
+      <item>Oceanic whitetip</item>
+      <item>Blue whaler shark</item>
+      <item>Silky Shark</item>
+      <item>
+        <tag> $._value = "Mako Shark"; </tag>
+        <one-of>
+          <item>Mako</item>
+          <item>Mako Shark</item>
+        </one-of>
+      </item>
+      <item>
+        <tag> $._value = "Hammerhead Shark"; </tag>
+        <one-of>
+          <item>Hammerhead</item>
+          <item>Hammerhead Shark</item>
+          <item>Hammerhead Sharks</item>
+        </one-of>
+      </item>
+      <item>
+        <tag> $._value = "Thresher Shark"; </tag>
+        <one-of>
+          <item>Thresher Shark</item>
+          <item>Thresher Sharks</item>
+        </one-of>
+      </item>
+      <item>Whale Shark</item>
+      <item>Manta Ray</item>
+      <item>Sunfish</item>
+      <item>Squid</item>
+      <item>Frigate and bullet tuna</item>
+      <item>Unknown Tuna</item>
+      <item>Unknown Trevally</item>
+      <item>Unknown Fish</item>
+      <item>Unknown Bird</item>
+      <item>Unknown</item>
+    </one-of>
+  </rule>
+
+  <!-- Digits is a simple rule for recognizing 1 to 3 digits as discrete components -->
+  <!-- Turning these digits into actual numbers needs to happen in code -->
+  <rule id="Digits">
+    <example> one two zero </example>
+    <example> one six </example>
+    <example> seven </example>
+    <item>
+      <ruleref uri="#base" />
+    </item>
+    <item repeat="0-2">
+      <ruleref uri="#base" />
+    </item>
+  </rule>
+
+  <!-- Based on this YouTube video:  http://www.youtube.com/watch?v=0d65YKUH2cU -->
+  <!--
+  The rule 'Number' will recognize any number from 1 to 999.  It can deal with
+  a few alternates ("a hundred" for "one hundred") and an optional "and" between
+  the hundred and tens place.
+  It will not recognize numbers of the form "one twenty" as 120.
+  I gave up on trying to set semantic values such that the output is numeric.
+  Doing so is easy enough in code.
+  -->
+  <rule id="Number">
+    <one-of>
+      <item>
+        <ruleref uri="#hundred" />
+        <item repeat="0-1">
+          <item repeat="0-1">
+            and
+          </item>
+          <ruleref uri="#tens" />
+        </item>
+      </item>
+      <item>
+        <ruleref uri="#tens" />
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="base">
+    <one-of>
+      <!-- Remove zero for use in the Number rule -->
+      <!-- TODO Add an alternate value of "Oh" for zero -->
+      <item> zero <tag> $._value = 0;</tag>
+      </item>
+      <item> one <tag> $._value = 1;</tag>
+      </item>
+      <item> two <tag> $._value = 2;</tag>
+      </item>
+      <item> three <tag> $._value = 3;</tag>
+      </item>
+      <item> four <tag> $._value = 4;</tag>
+      </item>
+      <item> five <tag> $._value = 5;</tag>
+      </item>
+      <item> six <tag> $._value = 6;</tag>
+      </item>
+      <item> seven <tag> $._value = 7;</tag>
+      </item>
+      <item> eight <tag> $._value = 8;</tag>
+      </item>
+      <item> nine <tag> $._value = 9;</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="teen">
+    <one-of>
+      <item> ten <tag> $._value = 10;</tag>
+      </item>
+      <item> eleven <tag> $._value = 11;</tag>
+      </item>
+      <item> twelve <tag> $._value = 12;</tag>
+      </item>
+      <item> thirteen <tag> $._value = 13;</tag>
+      </item>
+      <item> fourteen <tag> $._value = 14;</tag>
+      </item>
+      <item> fifteen <tag> $._value = 15;</tag>
+      </item>
+      <item> sixteen <tag> $._value = 16;</tag>
+      </item>
+      <item> seventeen <tag> $._value = 17;</tag>
+      </item>
+      <item> eighteen <tag> $._value = 18;</tag>
+      </item>
+      <item> nineteen <tag> $._value = 19;</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="twenty_and_up">
+    <one-of>
+      <item> twenty <tag> $._value = 20;</tag>
+      </item>
+      <item> thirty <tag> $._value = 30;</tag>
+      </item>
+      <item> fourty <tag> $._value = 40;</tag>
+      </item>
+      <item> fifty <tag> $._value = 50;</tag>
+      </item>
+      <item> sixty <tag> $._value = 60;</tag>
+      </item>
+      <item> seventy <tag> $._value = 70;</tag>
+      </item>
+      <item> eighty <tag> $._value = 80;</tag>
+      </item>
+      <item> ninety <tag> $._value = 90;</tag>
+      </item>
+    </one-of>
+    <!-- In a perfectly random distribution, 9 times out of 10, we'll get an appended base number -->
+    <item repeat="0-1">
+      <one-of>
+        <item weight="9">
+          <ruleref uri="#base" />
+        </item>
+        <item weight="1">
+          <ruleref special="NULL" />
+        </item>
+      </one-of>
+    </item>
+  </rule>
+
+  <rule id="tens">
+    <one-of>
+      <item>
+        <ruleref uri="#base" />
+      </item>
+      <item>
+        <ruleref uri="#teen" />
+      </item>
+      <item weight="8">
+        <ruleref uri="#twenty_and_up" />
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="hundred">
+    <one-of>
+      <item>
+        <item repeat="0-1">
+          a
+        </item>
+        hundred
+      </item>
+      <item weight="9">
+        <ruleref uri="#base" />
+        hundred
+      </item>
+    </one-of>
+  </rule>
+
+</grammar>
